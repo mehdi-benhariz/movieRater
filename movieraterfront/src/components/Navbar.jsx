@@ -9,7 +9,7 @@ const [search, setsearch] = useState("")
     p-2 rounded transition ease-linear duration-500 inset-x-0 bottom-0" 
     >Movie Rater</h1>
     <div class="left-0 " >
-    <Link href="/"><a
+    <Link to="/"><a
      class="inline-block border-b-4 hover:border-green-400 text-xl font-medium mx-2
      transition ease-linear duration-300 " 
     >Main</a></Link>
@@ -17,7 +17,7 @@ const [search, setsearch] = useState("")
     class="inline-block border-b-4 hover:border-green-400 text-xl font-medium mx-2
     transition ease-linear duration-300 " 
     >About</a></Link>
-    <Link href="/create" 
+    <Link to="/add" 
     // to ={{
     //   pathname: "/create", 
     //   query: { 

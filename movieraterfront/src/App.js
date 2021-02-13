@@ -3,12 +3,16 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
-import MovieContextProvider from './context/MovieContext';
 import MovieList  from "./components/MovieList";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Navbar from './components/Navbar';
+import MovieAdd from './components/pages/MovieAdd';
+import MovieDetails from "./components/pages/MovieDetails";
+import MoviEdit from './components/pages/MoviEdit';
+import SignIn from "./components/pages/SignIn";
+import SignUp from "./components/pages/SignUp"
+import Error from './components/pages/Error';
 
 const queryClient = new QueryClient();
 function App() {
@@ -17,9 +21,16 @@ function App() {
  <div className="App">
         <QueryClientProvider client={queryClient} >
           <Navbar />
-        <MovieList />
+          <Switch  >
+            <Route exact path='/' component={MovieList} />
+            <Route  path="/add" component={MovieAdd} />
+            <Route exact path="/:id" component={MovieDetails} />
+            <Route path="/edit/:id" component={MoviEdit} />
+            <Route  path="login" component={SignIn} />
+            <Route  path="signUp" component={SignUp} />
+            <Route  component={Error} />
+          </Switch>
         </QueryClientProvider>
-      
     </div>
     </Router>
   );
