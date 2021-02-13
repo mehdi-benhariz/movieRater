@@ -46,9 +46,7 @@ text-white  rounded font-meduim p-1 text-xl"
 >
 Find  </button>
     </form>
-
     </div>
-
 </nav>
 );
 }
