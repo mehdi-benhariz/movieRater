@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+
+.App-link {
+  color: #61dafb;
+}
+/*card element*/
+#title{
+  color: #282c34;
+  position: relative;
+  left: -100px;
+}
+#avg-rating{
+  position: relative;
+  left: -120px;
+}
+#description{
+  position: relative;
+  left: -100px;
+}
+#card-movie{
+  padding: 20px 20px 20px 20px;
+  min-width: 300px;
+}
+
+#list-movie{
+  display: inline-grid;
+  grid-column: auto;
+}
+.App-header{
+  background-color: #282c34;
+  color:aqua;
+  padding-bottom: 1 em;
+}
+
+header > h1{
+  padding-bottom: .7em;
+  padding-top: .5em;
+}
+#no-movies{
+  width: 2em;
+  color: #282c34;
+  display:inline-block;
+  width: 100%;
+ padding-top: 4em;
+}
+
+#add-movie{
+  position: left;
+
+  overflow: y;
+}
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:aqua;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+.float:hover{
+  background-color:#FFF;
+  color : aqua;
+  width:70px;
+  height:70px;
+  
+}
+.my-float{
+	margin-top:22px;
+}
