@@ -11,15 +11,6 @@ const MovieList = () => {
 const movies =[];
 const [modal, setmodal] = useState(false);
 
-const fetchMovies=async()=>{
-    const res = await fetch('http://127.0.0.1:8000/api/movies/',{
-        method:'GET',
-        headers:{
-           'Authorization':'Token 7e520a6d17b034046aaba9cea47f7e2f11d7fc03'
-        },   
-     } );
-     return res.json();
-}
 
 const {status,data,error} = useQuery('movies',fetchMovies);
 
@@ -31,13 +22,15 @@ const {status,data,error} = useQuery('movies',fetchMovies);
 {status=='success' && data.length ===0 && <p id="no-movies" >there are no movies ...</p> }
 <MDBContainer>
    <MDBRow>
+   <div class="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
       
    {status=='success'&& data.map((m)=>{return(
-          <React.Fragment key={m.id}>
+         <React.Fragment key={m.id}>
               <Card movie={m} />
-          </React.Fragment>
+          </React.Fragment> 
         ) ;
         })}
+  </div>
    </MDBRow>
 
 </MDBContainer>
@@ -54,3 +47,15 @@ onClick={()=> setmodal(!modal)}
 }
  
 export default MovieList;
+
+const fetchMovies=async()=>{
+    const base_url = process.env.REACT_APP_BASE_URL
+    console.log(base_url);
+    const res = await fetch(`http://127.0.0.1:8000/api/movies/`,{
+        method:'GET',
+        headers:{
+           'Authorization':'Token 7e520a6d17b034046aaba9cea47f7e2f11d7fc03'
+        },   
+     } );
+     return res.json();
+}
