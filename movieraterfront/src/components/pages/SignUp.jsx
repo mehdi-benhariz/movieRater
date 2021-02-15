@@ -1,8 +1,25 @@
-import { useState } from "react";
-
+import { useState ,useEffect} from "react";
+import { useCookies } from "react-cookie";
+import {API} from "../Api"
 const SignUp = () => {
 const [user, setuser] = useState({username:"",password:""})
-    return (
+const [token, setToken] = useCookies(['mr-token']);
+
+useEffect( () => {
+  if(token['mr-token']) window.location.href = '/movies';
+}, [token])
+
+const handleRegister=(e)=>{
+  e.preventDefault()
+  API.registerUser(user)
+  .then(()=>API.loginUser(user))
+  .then(resp =>setToken('mr-token', resp.token))
+  .catch( error => console.log(error))
+}
+
+const {username,password} =user;
+const isDisabled = username.length === 0 || password.length === 0;
+return (
     <div class="shadow-xl p-10 bg-white max-w-xl rounded">
       <h1 class="text-4xl font-black mb-4">Login</h1>
       <div class="mb-4 relative">
@@ -11,6 +28,7 @@ const [user, setuser] = useState({username:"",password:""})
         focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
           type="text"
           autofocus
+
         />
         <label
           for="email"
@@ -35,7 +53,10 @@ const [user, setuser] = useState({username:"",password:""})
           Password
         </label>
       </div>
-      <button class="bg-green-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded">
+      <button class="bg-green-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded"
+      onClick={handleRegister}
+      disabled={isDisabled}
+      >
         Submit
       </button>
     </div>

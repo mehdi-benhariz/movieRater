@@ -1,7 +1,24 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import {API} from "../Api";
+import {useCookies} from "react-cookie"
 
 const SignIn = () => {
   const [user, setuser] = useState({username:"",password:""});
+  const [token, setToken] = useCookies(['mr-token']);
+
+  useEffect( () => {
+    if(token['mr-token']) window.location.href = '/movies';
+  }, [token])
+
+const handleLogin=(e)=>{
+    e.preventDefault();
+    API.loginUser(user)
+    .then(resp =>setToken('mr-token', resp.token))
+    .catch( error => console.log(error))
+ } 
+ const {username,password} =user;
+ const isDisabled = username.length === 0 || password.length === 0;
+
 
 return (
 <div class="bg-gray-200 rounded py-16 px-12 m-16 flex flex-col items-center justify-center">
@@ -42,6 +59,8 @@ return (
         <button
           class="bg-green-500 hover:bg-green-600 text-white font-bold w-full py-3"
           type="submit"
+          onClick={handleLogin}
+          disabled={isDisabled}
         >
           Sign in
         </button>

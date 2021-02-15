@@ -1,20 +1,50 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 const MovieDetails = () => {
   const { id } = useParams();
   var movie;
+  const [token] = useCookies(['mr-token']);
 
   useEffect(async () => {
     const res = await fetch(`http://127.0.0.1:8000/api/movies/${id} `, {
       method: "GET",
       headers: {
-        Authorization: "Token 7e520a6d17b034046aaba9cea47f7e2f11d7fc03",
+        'Content-Type': 'application/json',
+        'Authorization':  `Token ${token['mr-token']}`,
       },
     });
     const data = await res.json();
     movie = data;
   }, []);
+  //get movie detail
+  const getDetails = () => {
+    fetch(`http://127.0.0.1:8000/api/movies/${id}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token['mr-token']}`
+      }
+    })
+    .then( resp => resp.json())
+    .then( resp => props.updateMovie(resp))
+    .catch( error => console.log(error))
+  }
+  //add a rate
+  const rateClicked = rate => evt => {
+    fetch(`http://127.0.0.1:8000/api/movies/${id}/rate_movie/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token['mr-token']}`
+      },
+      body: JSON.stringify( {stars: rate + 1} )
+    })
+    .then( () => getDetails())
+    .catch( error => console.log(error))
+  }
+
 
   return (
     <React.Fragment>

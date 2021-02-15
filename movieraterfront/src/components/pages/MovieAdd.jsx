@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-
+import {API} from "../Api";
+import {useCookies} from "react-cookie"
 const MovieAdd = () => {
-  const [title, settitle] = useState("");
-  const [description, setdescription] = useState("");
+
+  var [movie, setmovie] = useState({title:"",description:""});
+  const [token] = useCookies(['mr-token']);
+
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+    API.createMovie(movie, token['mr-token'])
+      .then( resp => props.movieCreated(resp))
+      .catch( error => console.log(error))
+  }
 
   return (
     <div
       class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg 
-           max-w-2xl"
+           max-w-2xl mt-3"
     >
       <div class="heading text-center font-bold text-2xl m-5 text-gray-800">
-        New Post
+        New Movie
       </div>
 
       <input
@@ -18,13 +27,16 @@ const MovieAdd = () => {
         spellcheck="false"
         placeholder="Title"
         type="text"
-      >
+        onChange={(e)=>setmovie({...movie,title:e.target.value})}
+      />
         <textarea
           class="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
           spellcheck="false"
           placeholder="Describe everything about this post here"
+          onChange={(e)=>setmovie({...movie,description:e.target.value})}
+
         ></textarea>
-      </input>
+      
       <div class="icons flex text-gray-500 m-2">
         <svg
           class="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
@@ -79,12 +91,14 @@ const MovieAdd = () => {
         </div>
       </div>
       <div class="buttons flex">
-        <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">
+        <button class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">
           Cancel
-        </div>
-        <div class="btn border border-green-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-green-500">
+        </button>
+        <button class="btn border border-green-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2
+         bg-green-500"
+         onClick={handleSubmit}>
           Post
-        </div>
+        </button>
       </div>
       <div></div>
     </div>

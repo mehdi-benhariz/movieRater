@@ -23,11 +23,11 @@ function App() {
           <Navbar />
           <Switch  >
             <Route exact path='/' component={MovieList} />
-            <Route  path="/add" component={MovieAdd} />
+            <Route  exact path="/add" component={MovieAdd} />
             <Route exact path="/:id" component={MovieDetails} />
             <Route exact path="/edit/:id" component={MoviEdit} />
-            <Route  path="/login" component={SignIn} />
-            <Route  path="/signUp" component={SignUp} />
+            <Route  exact path="/signIn" component={SignIn} />
+            <Route  exact path="/signUp" component={SignUp} />
             <Route  component={Error} />
           </Switch>
         </QueryClientProvider>
